@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chargement...</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+    }
+
+    #loading-screen {
+      display: none; /* Caché par défaut */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(255, 255, 255);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #fa61b5;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen">
+    <br>
+    <div class="loader"></div>
+    <p>Chargement en cours...</p>
+  </div>
+
+  <script>
+    window.onload = function () {
+      // Afficher le GIF de chargement
+      document.getElementById("loading-screen").style.display = "flex";
+
+      // Attendre 10 secondes, ensuite rediriger vers gif2.html
+      setTimeout(() => {
+        window.location.href = "gif2.html";
+      }, 12000);
+    };
+  </script>
+
+<script src="prodect.js"></script>
+
+</body>
+</html>

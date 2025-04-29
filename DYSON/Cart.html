@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traitement de votre commande | Promois Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #fa61b5;
+      --secondary: #000000;
+      --accent: #ffc0b3;
+      --light-blue: #b3e6f7;
+      --light-pink: #fff0f5;
+      --light-orange: #ffe5db;
+      --border-orange: #ffc0b3;
+      --text-dark: #222;
+      --text-medium: #555;
+      --text-light: #777;
+      --bg-light: #f6f7f9;
+      --white: #fff;
+      --success: #ffc0b3;
+      --warning: #ffe600;
+      --danger: #f44336;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 30px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: var(--light-blue);
+      padding: 10px 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .top-bar__highlight {
+      background: var(--secondary);
+      color: var(--white);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo__highlight {
+      color: #00e6e6;
+      margin-left: 5px;
+    }
+
+    .search {
+      flex: 1;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search__input {
+      width: 100%;
+      padding: 12px 20px;
+      padding-right: 45px;
+      border-radius: var(--radius-xl);
+      border: none;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .search__input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--secondary);
+    }
+
+    .search__icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-medium);
+    }
+
+    .cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+    }
+
+    .cart:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cart__icon {
+      font-size: 18px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 15px 0;
+      font-size: 13px;
+      color: var(--text-medium);
+    }
+
+    .breadcrumb__item {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .breadcrumb__item:not(:last-child)::after {
+      content: '›';
+      margin: 0 8px;
+      color: var(--text-light);
+    }
+
+    .breadcrumb__link {
+      color: var(--text-medium);
+      transition: var(--transition);
+    }
+
+    .breadcrumb__link:hover {
+      color: var(--secondary);
+    }
+
+    /* Processing Section */
+    .processing {
+      text-align: center;
+      padding: 50px 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .processing__icon {
+      font-size: 60px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      animation: pulse 1.5s infinite;
+    }
+
+    .processing__title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .processing__message {
+      font-size: 16px;
+      color: var(--text-medium);
+      margin-bottom: 30px;
+    }
+
+    .processing__product {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 500px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .processing__product-image {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+    }
+
+    .processing__product-info {
+      text-align: right;
+    }
+
+    .processing__product-name {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .processing__product-price {
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    .processing__product-quantity {
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    .processing__actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 25px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-size: 16px;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .btn--primary:hover {
+      background: #00b247;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn--secondary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn--secondary:hover {
+      background: #001a33;
+    }
+
+    .btn--icon {
+      margin-left: 8px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: var(--white);
+      padding: 50px 0 30px;
+      margin-top: 50px;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 992px) {
+      .footer__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer__title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer__title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary);
+    }
+
+    .footer__links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer__link {
+      color: rgba(255, 255, 255, 0.8);
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .footer__link:hover {
+      color: var(--white);
+      padding-right: 5px;
+    }
+
+    .newsletter {
+      margin-bottom: 20px;
+    }
+
+    .newsletter__text {
+      margin-bottom: 15px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .newsletter__form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter__input {
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 14px;
+    }
+
+    .newsletter__btn {
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      padding: 0 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter__btn:hover {
+      background: #c5004e;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .copyright {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 10px;
+    }
+
+    .payment-method {
+      width: 40px;
+      height: 25px;
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .payment-method img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    .trustpilot {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .trustpilot__stars {
+      color: var(--warning);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .processing__title {
+        font-size: 24px;
+      }
+      
+      .processing__actions {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span class="top-bar__highlight">LIVRAISON GRATUITE</span> dès 100€ d'achat | Retour gratuit sous 30 jours
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__content">
+      <a href="index.html" class="logo">
+        Promois<span class="logo__highlight"></span>
+      </a>
+      
+
+      
+      <a href="" class="cart">
+        <i class="fas fa-shopping-cart cart__icon"></i>
+        <span>Panier (1)</span>
+      </a>
+    </div>
+  </header>
+
+
+  <!-- Processing Section -->
+  <div class="container">
+    <div class="processing">
+      <div class="processing__icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h1 class="processing__title">Produit ajouté au panier avec succès !</h1>
+      <p class="processing__message">Votre article a été ajouté à votre panier. Vous pouvez continuer vos achats ou procéder au paiement.</p>
+      
+      <div class="processing__product">
+        <img src="ee7507whtstkeu7-1.jpg" alt="Micros sans fil Intempo EE7507WHTSTKEU7" class="processing__product-image">
+        <div class="processing__product-info">
+          <div class="processing__product-name">SECHE CHEVEUX HS05 AIRWRAP LONG COPPER NICKEL DYSON          </div>
+          <div class="processing__product-price">106.65 €</div>
+          <div class="processing__product-quantity">Quantité: 1</div>
+        </div>
+      </div>
+      
+      <div class="processing__actions">
+        <a href="Livre.html?action=continue" class="btn btn--secondary">
+          <i class=""></i>
+          Continuer mes achats
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__col">
+          <h3 class="footer__title">Service client</h3>
+          <div class="footer__links">
+            <a href="#" class="footer__link">Contactez-nous</a>
+            <a href="#" class="footer__link">FAQ</a>
+            <a href="#" class="footer__link">Suivi de commande</a>
+            <a href="#" class="footer__link">Retours & Remboursements</a>
+            <a href="#" class="footer__link">Guide des tailles</a>
+          </div>
+        </div>
+        
+        <div class="footer__col">
+          <h3 class="footer__title">À propos</h3>
+          <div class="footer__links">
+            <a href="#" class="footer__link">Qui sommes-nous ?</a>
+            <a href="#" class="footer__link">Nos magasins</a>
+            <a href="#" class="footer__link">Carrières</a>
+            <a href="#" class="footer__link">Responsabilité sociale</a>
+            <a href="#" class="footer__link">Presse</a>
+          </div>
+        </div>
+        
+        <div class="footer__col">
+          <h3 class="footer__title">Informations légales</h3>
+          <div class="footer__links">
+            <a href="#" class="footer__link">Conditions générales</a>
+            <a href="#" class="footer__link">Mentions légales</a>
+            <a href="#" class="footer__link">Politique de confidentialité</a>
+            <a href="#" class="footer__link">Politique des cookies</a>
+            <a href="#" class="footer__link">Conditions de vente</a>
+          </div>
+        </div>
+        
+        <div class="footer__col">
+          <h3 class="footer__title">Newsletter</h3>
+          <div class="newsletter">
+            <p class="newsletter__text">Abonnez-vous à notre newsletter pour recevoir nos offres exclusives !</p>
+            <form class="newsletter__form">
+              <input type="email" class="newsletter__input" placeholder="Votre adresse email" required>
+              <button type="submit" class="newsletter__btn">OK</button>
+            </form>
+          </div>
+          
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="copyright">
+          © 2025 Promois Online. Tous droits réservés.
+        </div>
+        
+        <div class="payment-methods">
+          <div class="payment-method">
+            <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" loading="lazy" alt="Visa">
+          </div>
+          <div class="payment-method">
+            <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" loading="lazy" alt="Mastercard">
+          </div>
+          <div class="payment-method">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064076.png" loading="lazy" alt="PayPal">
+          </div>
+          <div class="payment-method">
+            <img src="https://cdn-icons-png.flaticon.com/512/739/739257.png" loading="lazy" alt="CB">
+          </div>
+        </div>
+        
+        <div class="trustpilot">
+          <div class="trustpilot__stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>Trustpilot</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Animation pour l'icône de validation
+    const checkIcon = document.querySelector('.processing__icon i');
+    checkIcon.style.animation = 'pulse 1.5s infinite';
+    
+    // Gestion des clics sur les boutons
+    document.querySelector('.btn--secondary').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = 'Livre.html?action=continue';
+    });
+    
+    document.querySelector('.btn--primary').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = 'Livre.html?action=panier';
+    });
+  </script>
+  <script src="prodect.js"></script>
+</body>
+</html>
