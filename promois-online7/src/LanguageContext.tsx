@@ -1,0 +1,200 @@
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+
+export type Language = 'en' | 'fr';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const translations = {
+  en: {
+    'nav.home': 'Home',
+    'nav.gaming': 'Gaming',
+    'nav.keyboards': 'Keyboards',
+    'top_bar.message': 'GK61 Mechanical Keyboard RGB 60% Hot-Swappable - Free shipping on orders over $100.',
+    'cart.title': 'Cart',
+    'cart.empty': 'Your cart is empty',
+    'cart.empty_msg': "Looks like you haven't added anything to your cart yet.",
+    'cart.start_shopping': 'Start Shopping',
+    'cart.success': 'Product successfully added to cart!',
+    'cart.success_msg': 'Your item has been added to your cart. You can continue shopping or proceed to checkout.',
+    'cart.continue': 'CONTINUE SHOPPING',
+    'cart.checkout': 'PROCEED TO CHECKOUT',
+    'cart.save': 'Save',
+    'cart.quantity': 'Quantity',
+    'checkout.step.cart': 'Cart',
+    'checkout.step.delivery': 'Delivery',
+    'checkout.step.payment': 'Payment',
+    'checkout.step.confirmation': 'Confirmation',
+    'delivery.customer_info': 'Customer Information',
+    'delivery.first_name': 'First Name',
+    'delivery.last_name': 'Last Name',
+    'delivery.email': 'Email',
+    'delivery.email_hint': '(to track your order)',
+    'delivery.phone': 'Phone',
+    'delivery.shipping_address': 'Shipping Address',
+    'delivery.address': 'Address',
+    'delivery.city': 'City',
+    'delivery.zip': 'Postal Code',
+    'delivery.country': 'Country',
+    'delivery.select_country': 'Select a country',
+    'delivery.options': 'Delivery Options',
+    'delivery.standard': 'Standard Delivery',
+    'delivery.standard_desc': 'Delivery within 3-5 business days',
+    'delivery.free': 'Free',
+    'delivery.continue': 'Continue',
+    'summary.title': 'Order Summary',
+    'product.hot_deal': 'Hot Deal',
+    'product.stock_alert': 'Only 5 items left in stock!',
+    'product.in_stock': 'In Stock - Ready to ship',
+    'product.free_shipping': 'Free shipping on this item',
+    'product.secure_payment': '100% Secure Payment',
+    'product.add_to_cart': 'ADD TO CART',
+    'product.wishlist': 'Wishlist',
+    'product.secure': 'Secure',
+    'product.fast': 'Fast',
+    'product.returns': 'Returns',
+    'product.support': 'Support',
+    'product.description': 'Description',
+    'product.specifications': 'Specifications',
+    'product.reviews': 'Reviews',
+    'product.shipping': 'Shipping',
+    'product.shipping_info': 'Shipping Info',
+    'product.need_help': 'Need help?',
+    'product.help_msg': 'Our support team is available 24/7 to help you with your order.',
+    'product.contact_support': 'Contact Support',
+    'product.additional_info': 'Additional Information',
+    'product.best_selling': 'Best Selling Products',
+    'product.special_offers': 'Special offers on Gaming Accessories',
+    'product.description_title': 'GK61 – 60% RGB Hot-Swappable Mechanical Gaming Keyboard',
+    'product.description_p1': 'The GK61 is a compact 60% mechanical keyboard designed for gamers and performance enthusiasts. It offers a smooth, responsive, and fully customizable typing experience thanks to its hot-swappable switches.',
+    'product.description_p2': 'Its full RGB lighting offers dozens of customizable visual effects through dedicated software, allowing you to create a unique and dynamic gaming setup.',
+    'product.description_p3': 'Lightweight, durable, and equipped with a detachable USB-C port, the GK61 is ideal for gaming, fast typing, and minimalist desk setups.',
+    'info.coanda_title': '60% Compact Design',
+    'info.coanda_desc': 'The GK61 is a 60% size mechanical keyboard that frees up space on your desk for wider mouse movements.',
+    'info.acc_title': 'Hot-Swappable Switches',
+    'info.acc_desc': 'Customize your typing experience without soldering. Compatible with most 3 and 5-pin mechanical switches.',
+    'info.heat_title': 'Customizable RGB Backlighting',
+    'info.heat_desc': 'Enjoy millions of colors and numerous pre-installed lighting effects or create your own via the software.',
+    'footer.customer_service': 'Customer Service',
+    'footer.about_us': 'About Us',
+    'footer.legal_info': 'Legal Info',
+    'footer.newsletter': 'Newsletter',
+    'footer.newsletter_msg': 'Subscribe to our newsletter to receive exclusive offers!',
+    'footer.join': 'Join',
+    'footer.rights': '© 2025 Promois Online. Crafted for gamers.',
+    'toast.added': 'added to cart!',
+    'common.success': 'Success',
+    'common.learn_more': 'Learn more',
+    'common.sold': 'sold',
+    'product.payment_options': 'Payment in 3x or 4x without fees',
+  },
+  fr: {
+    'nav.home': 'Accueil',
+    'nav.gaming': 'Gaming',
+    'nav.keyboards': 'Claviers',
+    'top_bar.message': 'Clavier Mécanique GK61 RGB 60% Hot-Swappable - Livraison gratuite dès 100$ d\'achat.',
+    'cart.title': 'Panier',
+    'cart.empty': 'Votre panier est vide',
+    'cart.empty_msg': "Il semblerait que vous n'ayez encore rien ajouté à votre panier.",
+    'cart.start_shopping': 'Commencer vos achats',
+    'cart.success': 'Produit ajouté au panier avec succès !',
+    'cart.success_msg': 'Votre article a été ajouté à votre panier. Vous pouvez continuer vos achats ou passer à la caisse.',
+    'cart.continue': 'CONTINUER VOS ACHATS',
+    'cart.checkout': 'PASSER À LA CAISSE',
+    'cart.save': 'Économisez',
+    'cart.quantity': 'Quantité',
+    'checkout.step.cart': 'Panier',
+    'checkout.step.delivery': 'Livraison',
+    'checkout.step.payment': 'Paiement',
+    'checkout.step.confirmation': 'Confirmation',
+    'delivery.customer_info': 'Informations Client',
+    'delivery.first_name': 'Prénom',
+    'delivery.last_name': 'Nom',
+    'delivery.email': 'Email',
+    'delivery.email_hint': '(pour suivre votre commande)',
+    'delivery.phone': 'Téléphone',
+    'delivery.shipping_address': 'Adresse de Livraison',
+    'delivery.address': 'Adresse',
+    'delivery.city': 'Ville',
+    'delivery.zip': 'Code Postal',
+    'delivery.country': 'Pays',
+    'delivery.select_country': 'Sélectionner un pays',
+    'delivery.options': 'Options de Livraison',
+    'delivery.standard': 'Livraison Standard',
+    'delivery.standard_desc': 'Livraison sous 3 à 5 jours ouvrables',
+    'delivery.free': 'Gratuit',
+    'delivery.continue': 'Continuer',
+    'summary.title': 'Résumé de la Commande',
+    'product.hot_deal': 'Offre Spéciale',
+    'product.stock_alert': 'Plus que 5 articles en stock !',
+    'product.in_stock': 'En stock - Prêt à être expédié',
+    'product.free_shipping': 'Livraison gratuite sur cet article',
+    'product.secure_payment': 'Paiement 100% sécurisé',
+    'product.add_to_cart': 'AJOUTER AU PANIER',
+    'product.wishlist': 'Liste de souhaits',
+    'product.secure': 'Sécurisé',
+    'product.fast': 'Rapide',
+    'product.returns': 'Retours',
+    'product.support': 'Support',
+    'product.description': 'Description',
+    'product.specifications': 'Spécifications',
+    'product.reviews': 'Avis',
+    'product.shipping': 'Livraison',
+    'product.shipping_info': 'Infos Livraison',
+    'product.need_help': 'Besoin d\'aide ?',
+    'product.help_msg': 'Notre équipe de support est disponible 24/7 pour vous aider avec votre commande.',
+    'product.contact_support': 'Contacter le support',
+    'product.additional_info': 'Informations Complémentaires',
+    'product.best_selling': 'Meilleures Ventes',
+    'product.special_offers': 'Offres spéciales sur les accessoires Gaming',
+    'product.description_title': 'GK61 – Clavier Gamer Mécanique 60% RGB Hot-Swap',
+    'product.description_p1': 'Le GK61 est un clavier mécanique compact à 60 % conçu pour les joueurs et les passionnés de performance. Il offre une expérience de frappe fluide, réactive et entièrement personnalisable grâce à ses commutateurs remplaçables à chaud.',
+    'product.description_p2': 'Son éclairage RVB complet offre des dizaines d\'effets visuels personnalisables via un logiciel dédié, vous permettant de créer une configuration de jeu unique et dynamique.',
+    'product.description_p3': 'Léger, durable et équipé d\'un port USB-C amovible, le GK61 est idéal pour le jeu, la frappe rapide et les configurations de bureau minimalistes.',
+    'info.coanda_title': 'Conception 60% Compacte',
+    'info.coanda_desc': 'Le GK61 est un clavier mécanique de taille 60% qui libère de l\'espace sur votre bureau pour des mouvements de souris plus amples.',
+    'info.acc_title': 'Switches Hot-Swappable',
+    'info.acc_desc': 'Personnalisez votre expérience de frappe sans soudure. Compatible avec la plupart des switches mécaniques 3 et 5 broches.',
+    'info.heat_title': 'Rétroéclairage RGB Personnalisable',
+    'info.heat_desc': 'Profitez de millions de couleurs et de nombreux effets d\'éclairage préinstallés ou créez les vôtres via le logiciel.',
+    'footer.customer_service': 'Service Client',
+    'footer.about_us': 'À Propos',
+    'footer.legal_info': 'Infos Légales',
+    'footer.newsletter': 'Newsletter',
+    'footer.newsletter_msg': 'Inscrivez-vous à notre newsletter pour recevoir des offres exclusives !',
+    'footer.join': 'Rejoindre',
+    'footer.rights': '© 2025 Promois Online. Conçu pour les gamers.',
+    'toast.added': 'ajouté au panier !',
+    'common.success': 'Succès',
+    'common.learn_more': 'En savoir plus',
+    'common.sold': 'vendus',
+    'product.payment_options': 'Paiement en 3x ou 4x sans frais',
+  }
+};
+
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+  const [language, setLanguage] = useState<Language>('en');
+
+  const t = (key: string) => {
+    return translations[language][key as keyof typeof translations['en']] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (context === undefined) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
